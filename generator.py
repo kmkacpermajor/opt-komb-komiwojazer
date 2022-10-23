@@ -1,6 +1,6 @@
 from point import Point
 
-def readPointsFile(fileName: str ="przyklad.txt"):
+def readPointsFile(fileName: str):
     pointsArr = []
     with open(fileName) as pointsFile:
         pointsFile.readline() # wywalam sobie linie z ilością
