@@ -1,11 +1,14 @@
-
-from point import Point
 from generator import *
 from calculator import *
 
-arrPoints = generatePointsArray() # do generacji tablicy p
-arrPoints = readPointsArray() # do odczytu
-# generateFile() # do generacji samego pliku
+# zrób do tego jakieś menu proste:
+# czy odczytać
+# czy zapisać
+# ile punktów i jakie przedziały
+
+# arrPoints = generatePointsArray(26,[-100,100],[-1000,1000])
+arrPoints = readPointsFile("przyklad.txt")
+# generateFile(arrPoints, "przyklad2.txt")
 
 resTSP = findTSPResolution(arrPoints)
 print('TSP resolution is {}'.format(resTSP))
