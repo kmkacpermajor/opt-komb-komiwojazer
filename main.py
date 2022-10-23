@@ -1,2 +1,0 @@
-print('Hellokurwa')
-print('cos')
