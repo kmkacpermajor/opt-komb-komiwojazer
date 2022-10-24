@@ -6,8 +6,8 @@ from calculator import *
 # czy zapisać
 # ile punktów i jakie przedziały
 
-# arrPoints = generatePointsArray(26,[-100,100],[-1000,1000])
-arrPoints = readPointsFile("examples/ekursy.txt")
+arrPoints = generatePointsArray(26,[-100,100],[-1000,1000])
+# arrPoints = readPointsFile("examples/ekursy.txt")
 # generateFile(arrPoints, "przyklad2.txt")
 
 resTSP = findTSPResolution(arrPoints)

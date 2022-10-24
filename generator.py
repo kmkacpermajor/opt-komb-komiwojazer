@@ -23,5 +23,5 @@ def generatePointsArray(n: int, rangeX=[-1000,1000], rangeY=[-1000,1000]):
     for _ in range(n):
         x = random.randint(rangeX[0], rangeX[1])
         y = random.randint(rangeY[0], rangeY[1])
-        allPoints.append(Point(x, y))
+        allPoints.append(Point([x, y]))
     return allPoints
