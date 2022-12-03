@@ -23,4 +23,7 @@ class Colony:
     def getPheromoneMatrix(self):
         return self.pheromoneMatrix
 
+    def printPheromoneMatrix(self):
+        pass
+
 
