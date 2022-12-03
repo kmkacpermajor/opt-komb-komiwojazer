@@ -1,5 +1,4 @@
 from point import Point
-from calculator import *
 
 def findShortestInd(allPoints: list, currPoint: Point):
     minDist = None
