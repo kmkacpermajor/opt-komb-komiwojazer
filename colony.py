@@ -5,7 +5,7 @@ import random
 
 class Colony:
     def __init__(self, allPoints: list):
-        self.pheromoneMatrix = [[1 for _ in allPoints] for _ in allPoints]
+        self.pheromoneMatrix = [[startingValue for _ in allPoints] for _ in allPoints]
         self.distanceMatrix = [[calcDist(i, j) for i in allPoints] for j in allPoints]
         for i in range(len(self.pheromoneMatrix)):
             self.pheromoneMatrix[i][i] = 0

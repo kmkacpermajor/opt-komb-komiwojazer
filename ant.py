@@ -6,11 +6,11 @@ class Ant:
     def __init__(self, startingPointInd: int, allPoints: list, pheromoneMatrix: list, distanceMatrix: list):
         self.startingPointInd = startingPointInd
         self.allPoints = allPoints
-        self.pheromoneMatrix = pheromoneMatrix
+        self.pheromoneMatrix = pheromoneMatrix.copy()
         self.remainingPoints = [i for i in range(0,len(allPoints))]
         self.remainingPoints.remove(self.startingPointInd)
         self.distanceMatrix = distanceMatrix
-        self.decisionMatrix = [[self.calcDecision(i, j) for i in range(len(allPoints))] for j in range(len(allPoints))]
+        self.decisionMatrix = [[self.calcDecision(j, i) for i in range(len(allPoints))] for j in range(len(allPoints))]
         self.path = []
         self.summaryDist = 0
         if logLevel > 0:
@@ -21,6 +21,8 @@ class Ant:
         optimalDist = 0
         pointsToBeSearched = self.remainingPoints.copy()
 
+        # print(f"decision matrix for {currInd}")
+        # self.printPheromoneMatrix()
         if not greedy:
             maxProbability = 0
             for nextInd in pointsToBeSearched:
@@ -89,5 +91,12 @@ class Ant:
 
     def getSummaryDist(self):
         return self.summaryDist
+
+    def printPheromoneMatrix(self):
+        for j in range(len(self.pheromoneMatrix)):
+            print(f"{j}:", end="")
+            for i in range(len(self.pheromoneMatrix[j])):
+                print(f"{self.pheromoneMatrix[j][i]} ", end="")
+            print("")
 
         

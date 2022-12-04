@@ -1,7 +1,9 @@
 beta = 1
-pheromoneMultiplier = 1.2  # Q > 0
-evaporationMultiplier = 0.8 # 0 < ro < 1
+pheromoneMultiplier = 30  # Q > 0
+evaporationMultiplier = 0.7 # 0 < ro < 1
+startingValue = 0.3
+shouldInitializeGreedy = True
 
 
 logLevel = 1
-timeout = 5
+timeout = 300
