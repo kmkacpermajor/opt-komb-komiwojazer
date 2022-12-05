@@ -7,8 +7,8 @@ import time
 
 startingTime = time.time()
 
-arrPoints = readPointsFile("examples/ekursy.txt")
-#arrPoints = generatePointsArray(5,[-100,100],[-100,100])
+arrPoints = readPointsFile("examples/berlin52.txt")
+#arrPoints = generatePointsArray(3,[-10,10],[-10,10])
 #generateFile(arrPoints, "przyklad2.txt")
 
 
@@ -16,6 +16,7 @@ iteration = 0
 initialize = shouldInitializeGreedy
 antColony = Colony(arrPoints)
 distanceMatrix = antColony.getDistanceMatrix()
+#print(distanceMatrix)
 
 if logLevel > 0:
     print("Initial pheromone matrix:")
@@ -23,7 +24,7 @@ if logLevel > 0:
 
 while time.time() < startingTime + timeout:
     print(f"Starting iteration number: {iteration}")
-    currPheromoneMatrix = antColony.getPheromoneMatrix()
+    currPheromoneMatrix = [row[:] for row in antColony.getPheromoneMatrix()]
 
     if logLevel > 0:
         print(f"Iteration before {iteration} matrix")

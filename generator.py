@@ -7,15 +7,19 @@ def readPointsFile(fileName: str):
         pointsFile.readline() # wywalam sobie linie z ilością
 
         for pointString in pointsFile:
-            pointsArr.append(Point([int(pointCoord) for pointCoord in pointString.split(' ')]))
+            pointString = pointString.strip().split(' ')
+            pointString.pop(0)
+            pointsArr.append(Point([int(pointCoord) for pointCoord in pointString]))
     
     return pointsArr
     
 def generateFile(pointsArr: list, fileName: str):
     with open(fileName, "w") as pointsFile:
         pointsFile.write("{}".format(len(pointsArr)))
+        i = 1
         for point in pointsArr:
-            pointsFile.write("\n{} {}".format(point.x, point.y))
+            pointsFile.write("\n{} {} {}".format(i, point.x, point.y))
+            i += 1
 
 def generatePointsArray(n: int, rangeX=[-1000,1000], rangeY=[-1000,1000]):
     # generacja tablicy punktów

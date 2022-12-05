@@ -13,12 +13,12 @@ class Colony:
     def updatePheromoneEdge(self, summaryDist: int, edge: list):
         i = edge[0]
         j = edge[1]
-        self.pheromoneMatrix[j][i] += pheromoneMultiplier/summaryDist
+        self.pheromoneMatrix[i][j] += pheromoneMultiplier/summaryDist
 
     def evaporateallPheromoneEdges(self):
         for j in range(len(self.pheromoneMatrix)):
             for i in range(len(self.pheromoneMatrix)):
-                self.pheromoneMatrix[j][i] *= (1-evaporationMultiplier)
+                self.pheromoneMatrix[i][j] *= (1-evaporationMultiplier)
 
     def getPheromoneMatrix(self):
         return self.pheromoneMatrix

@@ -6,11 +6,15 @@ class Ant:
     def __init__(self, startingPointInd: int, allPoints: list, pheromoneMatrix: list, distanceMatrix: list):
         self.startingPointInd = startingPointInd
         self.allPoints = allPoints
-        self.pheromoneMatrix = pheromoneMatrix.copy()
+        self.pheromoneMatrix = [row[:] for row in pheromoneMatrix]
         self.remainingPoints = [i for i in range(0,len(allPoints))]
         self.remainingPoints.remove(self.startingPointInd)
         self.distanceMatrix = distanceMatrix
         self.decisionMatrix = [[self.calcDecision(j, i) for i in range(len(allPoints))] for j in range(len(allPoints))]
+        if logLevel > 0:
+            print(f"Mrówka {startingPointInd}")
+            for row in self.decisionMatrix:
+                print(row)
         self.path = []
         self.summaryDist = 0
         if logLevel > 0:
@@ -73,14 +77,14 @@ class Ant:
             sumOfEtaToBeta = 0
 
             for k in range(len(self.allPoints)):
-                sumOfTau += self.pheromoneMatrix[k][i]
+                sumOfTau += self.pheromoneMatrix[i][k]
                 try:
-                    sumOfEtaToBeta += math.pow(1/self.distanceMatrix[k][i], beta)
+                    sumOfEtaToBeta += 1/self.distanceMatrix[i][k]
                 except:
                     pass
 
-            tau = self.pheromoneMatrix[j][i]
-            etaToBeta = math.pow(1/self.distanceMatrix[j][i], beta)
+            tau = self.pheromoneMatrix[i][j]
+            etaToBeta = 1/self.distanceMatrix[i][j]
 
             return tau*etaToBeta / sumOfTau*sumOfEtaToBeta
         else:
