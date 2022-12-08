@@ -9,3 +9,12 @@ def calcDist(a: Point, b: Point):
 
     return math.sqrt( xSub * xSub + ySub * ySub )
 
+def optimize(val, power):
+    result = pow(val, power//2)
+    result = result * result
+
+    if power % 2 != 0:
+        result = result * val
+    return result
+
+
