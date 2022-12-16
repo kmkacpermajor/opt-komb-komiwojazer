@@ -26,7 +26,7 @@ if logLevel > 0:
 bestDist = 0
 bestPath = []
 
-while time.time() < startingTime + timeout and sameBest < 20:
+while time.time() < startingTime + timeout:
     try:
         print(f"Starting iteration number: {iteration}")
         
@@ -110,7 +110,7 @@ print(f"Best greedy from {bestPointGreedy}: {bestGreedy}")
 
 
 f = open("wyniki.txt","a")
-f.write(f"{alpha};{beta};{pheromoneMultiplier};{evaporationMultiplier};{bestMeta}\n")
+f.write(f"{alpha};{beta};{pheromoneMultiplier};{evaporationMultiplier};{tauZero};{startingValue};{bestMeta}\n")
 # warunki stopu
 # czas: max 5 minut
 # pliki: berlin52, bier127, tsp250, tsp500, tsp1000
