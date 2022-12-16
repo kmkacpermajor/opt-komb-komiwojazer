@@ -73,7 +73,7 @@ while time.time() < startingTime + timeout and sameBest < 20:
 
         print(f"Best dist in this iteration: {bestDist} by ant from {bestPath[0][0]}")
     except:
-        pass
+        break
 
 currPheromoneMatrix = antColony.getPheromoneMatrix()
 bestMeta = 0
