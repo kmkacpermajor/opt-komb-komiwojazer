@@ -27,50 +27,53 @@ bestDist = 0
 bestPath = []
 
 while time.time() < startingTime + timeout and sameBest < 20:
-    print(f"Starting iteration number: {iteration}")
-    
-    if logLevel > 0:
-        print(f"Iteration before {iteration} matrix")
-        antColony.printPheromoneMatrix()
-    
-    currPheromoneMatrix = [row[:] for row in antColony.getPheromoneMatrix().copy()]
-    bestInThis = 0
-    
-    for startingPointInd in range(len(arrPoints)):
-    
-        ant = Ant(startingPointInd, arrPoints, currPheromoneMatrix, distanceMatrix)
-        if random.random() > randomConstant:
-            ant.findPath(lookPheromone = True)
-        else:
-            ant.findPath()
-        summaryDist = ant.getSummaryDist()
-        if logLevel > 0:
-            print(ant.getPath())
-            print(summaryDist)
-
-        if bestDist == 0 or summaryDist < bestDist:
-            bestDist = summaryDist
-            bestPath = ant.getPath()
-            sameBest = 0
-
-        if bestInThis == 0 or summaryDist < bestInThis:
-            bestInThis = summaryDist
-
-    if bestInThis == bestDist:
-        sameBest += 1
+    try:
+        print(f"Starting iteration number: {iteration}")
         
-    print(f"Best in this : {bestInThis}")
+        if logLevel > 0:
+            print(f"Iteration before {iteration} matrix")
+            antColony.printPheromoneMatrix()
+        
+        currPheromoneMatrix = [row[:] for row in antColony.getPheromoneMatrix().copy()]
+        bestInThis = 0
+        
+        for startingPointInd in range(len(arrPoints)):
+        
+            ant = Ant(startingPointInd, arrPoints, currPheromoneMatrix, distanceMatrix)
+            if random.random() > randomConstant:
+                ant.findPath(lookPheromone = True)
+            else:
+                ant.findPath()
+            summaryDist = ant.getSummaryDist()
+            if logLevel > 0:
+                print(ant.getPath())
+                print(summaryDist)
 
-    antColony.evaporateallPheromoneEdges()
-    for edge in bestPath:
-            antColony.updatePheromoneEdge(bestDist, edge)
+            if bestDist == 0 or summaryDist < bestDist:
+                bestDist = summaryDist
+                bestPath = ant.getPath()
+                sameBest = 0
 
-    if logLevel > 0:
-        print(f"Iteration after {iteration} matrix")
-        antColony.printPheromoneMatrix()
-    iteration += 1
+            if bestInThis == 0 or summaryDist < bestInThis:
+                bestInThis = summaryDist
 
-    print(f"Best dist in this iteration: {bestDist} by ant from {bestPath[0][0]}")
+        if bestInThis == bestDist:
+            sameBest += 1
+            
+        print(f"Best in this : {bestInThis}")
+
+        antColony.evaporateallPheromoneEdges()
+        for edge in bestPath:
+                antColony.updatePheromoneEdge(bestDist, edge)
+
+        if logLevel > 0:
+            print(f"Iteration after {iteration} matrix")
+            antColony.printPheromoneMatrix()
+        iteration += 1
+
+        print(f"Best dist in this iteration: {bestDist} by ant from {bestPath[0][0]}")
+    except:
+        pass
 
 currPheromoneMatrix = antColony.getPheromoneMatrix()
 bestMeta = 0
@@ -105,6 +108,9 @@ print()
 print(f"Best meta from {bestPointMeta}: {bestMeta}")
 print(f"Best greedy from {bestPointGreedy}: {bestGreedy}")
 
+
+f = open("wyniki.txt","a")
+f.write(f"{alpha};{beta};{pheromoneMultiplier};{evaporationMultiplier};{bestMeta}\n")
 # warunki stopu
 # czas: max 5 minut
 # pliki: berlin52, bier127, tsp250, tsp500, tsp1000
