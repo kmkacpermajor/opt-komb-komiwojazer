@@ -4,11 +4,9 @@ beta = random.randint(0,100)
 pheromoneMultiplier = random.randint(0,100)  # Q > 0
 evaporationMultiplier = random.uniform(0.000001,0.999999) # 0 < ro < 1
 startingValue = random.uniform(0.000001,0.099999) # 0 < ro < 1
-shouldInitializeGreedy = False
 tauZero = random.uniform(0.000001,0.000999) # 0 < ro < 1
-randomConstant = 1
 
 logLevel = 0
-timeout = 300
-nameOfFile = "examples/berlin52.txt"
+timeout = 600
+nameOfFile = "examples/bier127.txt"
 

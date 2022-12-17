@@ -1,5 +1,4 @@
 from generator import *
-from calculator import *
 from colony import Colony
 from ant import Ant
 from constants import *
@@ -15,7 +14,6 @@ arrPoints = readPointsFile(nameOfFile)
 iteration = 0
 antColony = Colony(arrPoints)
 distanceMatrix = antColony.getDistanceMatrix()
-#print(distanceMatrix)
 sameBest = 0
 
 
@@ -40,10 +38,7 @@ while time.time() < startingTime + timeout:
         for startingPointInd in range(len(arrPoints)):
         
             ant = Ant(startingPointInd, arrPoints, currPheromoneMatrix, distanceMatrix)
-            if random.random() > randomConstant:
-                ant.findPath(lookPheromone = True)
-            else:
-                ant.findPath()
+            ant.findPath()
             summaryDist = ant.getSummaryDist()
             if logLevel > 0:
                 print(ant.getPath())
@@ -75,20 +70,9 @@ while time.time() < startingTime + timeout:
     except:
         break
 
-currPheromoneMatrix = antColony.getPheromoneMatrix()
-bestMeta = 0
-bestPointMeta = 0
-for startingPointInd in [0]:
-    ant = Ant(startingPointInd, arrPoints, currPheromoneMatrix, distanceMatrix)
-    ant.findPath()
-    currDist = ant.getSummaryDist()
-    if bestMeta == 0:
-        bestMeta = currDist
-        bestPointMeta = startingPointInd
-    else:
-        if currDist < bestMeta:
-            bestMeta = currDist
-            bestPointMeta = startingPointInd
+f = open("wyniki.txt","a")
+
+f.write(f"{alpha};{beta};{pheromoneMultiplier};{evaporationMultiplier};{tauZero};{startingValue};{bestDist}\n")
 
 bestGreedy = 0
 bestPointGreedy = 0
@@ -105,12 +89,8 @@ for startingPointInd in [0]:
             bestPointGreedy = startingPointInd
 
 print()
-print(f"Best meta from {bestPointMeta}: {bestMeta}")
-print(f"Best greedy from {bestPointGreedy}: {bestGreedy}")
-
-
-f = open("wyniki.txt","a")
-f.write(f"{alpha};{beta};{pheromoneMultiplier};{evaporationMultiplier};{tauZero};{startingValue};{bestMeta}\n")
+print(f"Best meta: {bestDist}")
+print(f"Best greedy: {bestGreedy}")
 # warunki stopu
 # czas: max 5 minut
 # pliki: berlin52, bier127, tsp250, tsp500, tsp1000

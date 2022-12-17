@@ -1,12 +1,10 @@
 from point import Point
 from constants import *
-from calculator import *
-import random
 
 class Colony:
     def __init__(self, allPoints: list):
         self.pheromoneMatrix = [[startingValue for _ in allPoints] for _ in allPoints]
-        self.distanceMatrix = [[calcDist(i, j) for i in allPoints] for j in allPoints]
+        self.distanceMatrix = [[self.calcDist(i, j) for i in allPoints] for j in allPoints]
         for i in range(len(self.pheromoneMatrix)):
             self.pheromoneMatrix[i][i] = 0
 
@@ -19,6 +17,7 @@ class Colony:
         for i in range(len(self.pheromoneMatrix)):
             for j in range(len(self.pheromoneMatrix)):
                 self.pheromoneMatrix[i][j] = (evaporationMultiplier*self.pheromoneMatrix[i][j]) + tauZero
+            self.pheromoneMatrix[i][i] = 0
 
     def getPheromoneMatrix(self):
         return self.pheromoneMatrix
@@ -33,4 +32,10 @@ class Colony:
                 print(f"{self.pheromoneMatrix[i][j]} ", end="")
             print("")
 
+    def calcDist(a: Point, b: Point):
+   
+        ySub = a.y - b.y
+        xSub = a.x - b.x
+
+        return math.sqrt( xSub * xSub + ySub * ySub )
 

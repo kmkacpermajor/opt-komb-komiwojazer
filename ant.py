@@ -1,8 +1,5 @@
-import random
-from point import Point
-from calculator import *
+from constants import *
 import math
-from decimal import *
 
 class Ant:
     def __init__(self, startingPointInd: int, allPoints: list, pheromoneMatrix: list, distanceMatrix: list):
@@ -17,26 +14,22 @@ class Ant:
         if logLevel > 0:
             print(f"Ant with starting point {self.startingPointInd}")
 
-    def findNext(self, currInd: int, lookPheromone: bool = False, greedy: bool = False):
+    def findNext(self, currInd: int, greedy: bool = False):
         bestInd = 0
         optimalDist = 0
         pointsToBeSearched = self.remainingPoints.copy()
+        if logLevel > 0:
+            print(f"Points to be searched: {pointsToBeSearched}")
 
         if not greedy:
-            if not lookPheromone:
-                maxProbability = 0
-                for nextInd in pointsToBeSearched:
-                    nextProbability = self.calcDecision(currInd,nextInd, pointsToBeSearched)
-                    if nextProbability > maxProbability:
-                        maxProbability = nextProbability
-                        bestInd = nextInd
-            else:
-                maxPheromone = 0
-                for nextInd in pointsToBeSearched:
-                    nextPheromone = self.pheromoneMatrix[currInd][nextInd]
-                    if nextPheromone > maxPheromone:
-                        maxPheromone = nextPheromone
-                        bestInd = nextInd
+            maxProbability = 0
+            for nextInd in pointsToBeSearched:
+                nextProbability = self.calcDecision(currInd,nextInd, pointsToBeSearched)
+                if logLevel > 0:
+                    print(f"Probability for nextInd {nextInd} is {nextProbability}")
+                if nextProbability > maxProbability:
+                    maxProbability = nextProbability
+                    bestInd = nextInd
         else:
             minDist = None
             for nextInd in pointsToBeSearched:
@@ -79,26 +72,22 @@ class Ant:
             for k in toBeSearched:
                 tau = self.pheromoneMatrix[i][k]
                 eta = 1/self.distanceMatrix[i][k]
-                tauToAlpha = optimize(tau,alpha)
-                etaToBeta = optimize(eta,beta)
+                tauToAlpha = math.pow(tau,alpha)
+                etaToBeta = math.pow(eta,beta)
                 mianownik += tauToAlpha*etaToBeta
 
             tau = self.pheromoneMatrix[i][j]
             eta = 1/self.distanceMatrix[i][j]
-            tauToAlpha = optimize(tau,alpha)
-            etaToBeta = optimize(eta,beta)
-            #print(etaToBeta)
+            tauToAlpha = math.pow(tau,alpha)
+            etaToBeta = math.pow(eta,beta)
             licznik = tauToAlpha*etaToBeta
+
+            if mianownik == 0:
+                return 0
 
             return licznik / mianownik
         else:
             return 0
-
-    def getPath(self):
-        return self.path
-
-    def getSummaryDist(self):
-        return self.summaryDist
 
     def printPheromoneMatrix(self):
         for j in range(len(self.pheromoneMatrix)):
@@ -106,5 +95,11 @@ class Ant:
             for i in range(len(self.pheromoneMatrix[j])):
                 print(f"{self.pheromoneMatrix[j][i]} ", end="")
             print("")
+
+    def getPath(self):
+        return self.path
+
+    def getSummaryDist(self):
+        return self.summaryDist        
 
         
