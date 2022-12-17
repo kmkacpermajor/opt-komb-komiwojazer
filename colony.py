@@ -33,7 +33,7 @@ class Colony:
                 print(f"{self.pheromoneMatrix[i][j]} ", end="")
             print("")
 
-    def calcDist(a: Point, b: Point):
+    def calcDist(self, a: Point, b: Point):
    
         ySub = a.y - b.y
         xSub = a.x - b.x
