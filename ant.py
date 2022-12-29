@@ -1,11 +1,12 @@
 from constants import *
 import math
+from copy import copy, deepcopy
 
 class Ant:
     def __init__(self, startingPointInd: int, allPoints: list, pheromoneMatrix: list, distanceMatrix: list):
         self.startingPointInd = startingPointInd
         self.allPoints = allPoints
-        self.pheromoneMatrix = [row[:] for row in pheromoneMatrix.copy()]
+        self.pheromoneMatrix = deepcopy(pheromoneMatrix)
         self.remainingPoints = [i for i in range(0,len(allPoints))]
         self.remainingPoints.remove(self.startingPointInd)
         self.distanceMatrix = distanceMatrix
@@ -57,6 +58,8 @@ class Ant:
                 else:
                     nextInd = self.findNext(currInd, False)
             self.path.append([currInd, nextInd])
+            if logLevel > 0:
+                print(f"<<<<< rem poi: {self.remainingPoints} from going from point {currInd} with starting {self.startingPointInd}")
             self.remainingPoints.remove(nextInd)
             currInd = nextInd
             if logLevel > 0:
@@ -67,25 +70,30 @@ class Ant:
 
     def calcDecision(self, i: int, j: int, toBeSearched: list):
         if i!=j:
-            mianownik = 0
+            if len(self.remainingPoints) != 1:
+                mianownik = 0
 
-            for k in toBeSearched:
-                tau = self.pheromoneMatrix[i][k]
-                eta = 1/self.distanceMatrix[i][k]
+                if logLevel > 0:
+                    print(f"toBeSearched for {i},{j}: {toBeSearched}")
+                for k in toBeSearched:
+                    tau = self.pheromoneMatrix[i][k]
+                    eta = 1/self.distanceMatrix[i][k]
+                    tauToAlpha = math.pow(tau,alpha)
+                    etaToBeta = math.pow(eta,beta)
+                    mianownik += tauToAlpha*etaToBeta
+
+                tau = self.pheromoneMatrix[i][j]
+                eta = 1/self.distanceMatrix[i][j]
                 tauToAlpha = math.pow(tau,alpha)
                 etaToBeta = math.pow(eta,beta)
-                mianownik += tauToAlpha*etaToBeta
+                licznik = tauToAlpha*etaToBeta
 
-            tau = self.pheromoneMatrix[i][j]
-            eta = 1/self.distanceMatrix[i][j]
-            tauToAlpha = math.pow(tau,alpha)
-            etaToBeta = math.pow(eta,beta)
-            licznik = tauToAlpha*etaToBeta
+                if mianownik == 0:
+                    return 0
 
-            if mianownik == 0:
-                return 0
-
-            return licznik / mianownik
+                return licznik / mianownik
+            else:
+                return 1
         else:
             return 0
 

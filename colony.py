@@ -20,6 +20,12 @@ class Colony:
                 self.pheromoneMatrix[i][j] = (evaporationMultiplier*self.pheromoneMatrix[i][j]) + tauZero
             self.pheromoneMatrix[i][i] = 0
 
+    def addStartingValueToAll(self):
+        for i in range(len(self.pheromoneMatrix)):
+            for j in range(len(self.pheromoneMatrix[i])):
+                self.pheromoneMatrix[i][j] += startingValue
+
+
     def getPheromoneMatrix(self):
         return self.pheromoneMatrix
 
